@@ -1,0 +1,54 @@
+name: CellGraph-Experiment01
+
+parameters:
+
+  # Knowledge Graph parameters
+  KnowledgeGraph:
+    model: RotatE
+    loss: softplus
+    batch_size: 512
+    epochs: 5
+    sampler: None
+    layers: None
+    z_dim: 512
+    prev: None
+    prev_data: None
+
+  # GNN parameters
+  GNN:
+    model: GAE
+    layers: [2,1]
+    dropout_rate: 0.1
+    epochs: 2
+    lr: 0.001
+    lr_scheduler: True
+    lr_factor: 0.1
+    lr_patience: 20
+    early_stopping: True
+    es_patience: 20
+    batch_size: 1
+    z_dim: 1
+    data_path: CellGraph_Data/processed
+    attention: False
+    pooling: Mean
+    prev: None
+
+  # GVAE parameters
+  GVAE:
+    layers: [512, 256, 128]
+    dropout_rate: 0.1
+    batch_norm: True
+    epochs: 100
+    lr: 0.1
+    lr_scheduler: True
+    lr_factor: 0.1
+    lr_patience: 20
+    early_stopping: True
+    es_patience: 20
+    batch_size: 512
+    z_dim: 64
+    data_path: .
+    prev: None
+
+  Baseline: True # If True, then just KGE and MeanPool
+  Combiner: MLP   # False, MLP or Concat for combining GVAE and KGE embeddings

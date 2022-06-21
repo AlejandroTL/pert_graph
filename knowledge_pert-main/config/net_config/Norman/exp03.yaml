@@ -1,0 +1,63 @@
+name: GAE-net-01
+
+data:
+  triples_path: omnipath_triples/triples_unfiltered
+  entities_path: omnipath_triples/entities.json
+  drugs_path: omnipath_triples/drug_names.json
+  #data_path: '../GSM_new_allgenes.h5ad'
+  #data_path: '/home/aletl/Documents/datasets/sciplex3_new.h5ad'
+  data_path: '../Norman2019_prep_new_allgenes.h5ad'
+  change_drugs: False
+  perturbation: gene
+  condition_key: condition
+  dose_key: dose_val
+  cell_type_key: cell_type
+  split_key: split
+
+architecture:
+  loss: 'gauss'
+  adversarial: True
+  x_dim: 3  # input dimension of node features
+  gnn_encoder_layers: [3, 2, 1]
+  gnn_encoder_dropout: 0.0
+  vae_encoder_layers: [2048, 1024, 512]
+  z_dim: 128  # dimension of latent space
+  vae_encoder_dropout: 0.0
+  vae_encoder_batch_norm: False
+  vae_decoder_layers: [512]
+  vae_decoder_dropout: 0.0
+  vae_decoder_batch_norm: False
+  gnn_decoder_layers: [1, 2]
+  gnn_decoder_dropout: 0.0
+  adversary_depth: 4
+  dosers_depth: 3
+  adversary_width: 128
+  dosers_width: 64
+  adversary_dropout: 0.1
+  Cheb: False
+  k: 2
+
+training:
+  epochs_warmup: 0
+  adversary_steps: 3
+  warmup_kl: 100
+  max_epoch_kl: 200
+  max_beta: 0.000001
+  batch_size: 256
+  adversary_wd: 0.00019718137187038062
+  autoencoder_lr: 1.0e-5
+  autoencoder_wd: 1.1455862519513426e-05
+  adversary_lr: 1.0e-5
+  dosers_lr: 1.0e-5
+  dosers_wd: 7.165810318386074e-07
+  penalty_adversary: 0
+  reg_adversary: 10
+  step_size_lr: 25
+  epochs: 1000
+  patience: 20
+  max_minutes: 6000
+  checkpoint_freq: 20
+  save_dir: '../trained_models/Adversarial/Norman/PowerfulEncoder_128_1to3_verypowerfuladv_kl0000001_reg10'
+  seed: 19
+  evaluation: True
+  name: "adv_step_10_nopenalty_reg50"

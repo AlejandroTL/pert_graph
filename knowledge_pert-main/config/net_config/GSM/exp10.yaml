@@ -1,0 +1,69 @@
+name: GAE-net-01
+
+data:
+  triples_path: omnipath_triples/triples_unfiltered
+  entities_path: omnipath_triples/entities.json
+  drugs_path: omnipath_triples/drug_names.json
+  #data_path: '../GSM_new_allgenes.h5ad'
+  #data_path: '/home/aletl/Documents/datasets/sciplex3_new.h5ad'
+  #data_path: '../Norman2019_prep_new_allgenes.h5ad'
+  data_path: '../GSM_new.h5ad'
+  change_drugs: False
+  perturbation: drug
+  condition_key: condition
+  dose_key: dose
+  cell_type_key: cell_type
+  split_key: split
+
+architecture:
+  loss: 'gauss'
+  adversarial: True
+  variational: True
+  x_dim: 3  # input dimension of node features
+  gnn_encoder_layers: [3, 3, 1]
+  gnn_encoder_dropout: 0.0
+  vae_encoder_layers: [512, 256]
+  z_dim: 128  # dimension of latent space
+  vae_encoder_dropout: 0.0
+  vae_encoder_batch_norm: False
+  vae_decoder_layers: [256, 512]
+  vae_decoder_dropout: 0.0
+  vae_decoder_batch_norm: False
+  gnn_decoder_layers: False
+  gnn_decoder_dropout: 0.0
+  adversary_depth: 3
+  dosers_depth: 3
+  adversary_width: 64
+  dosers_width: 64
+  adversary_dropout: 0.3
+  Cheb: False
+  k: 2
+  node_embeddings: False 
+  node_embeddings_dim: 32
+  matrix_reconstruction: False
+
+training: 
+  epochs_warmup: 100
+  warmup_kl: 100
+  max_epoch_kl: 200
+  max_beta: 0.01 
+  matrix_loss_weight: 0.001
+  adversary_steps: 3
+  batch_size: 256
+  adversary_wd: 0.00019718137187038062
+  autoencoder_lr: 1.0e-5
+  autoencoder_wd: 1.1455862519513426e-05
+  adversary_lr: 1.0e-5
+  dosers_lr: 1.0e-5
+  dosers_wd: 7.165810318386074e-07
+  penalty_adversary: 0
+  reg_adversary: 50
+  step_size_lr: 25
+  epochs: 1000
+  patience: 20
+  max_minutes: 6000
+  checkpoint_freq: 20
+  save_dir: '../trained_models/Adversarial/Kang_original/PowerfulNetwork_notThatPowerfulAdv_3trick_noGNN_var_100wp'
+  seed: 19
+  evaluation: True
+  name: "adv_step_10_nopenalty_reg50"
